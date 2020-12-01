@@ -4,46 +4,46 @@
 using std::cout;
 
 
-double integrate_func(double left, double right, double(*func)(double))
+double integrate_func(double left, double right, double(*func)(double, bool), bool mode)
 {
-	return ((func(left) + func(right)) / 2) * (right - left);
+	return ((func(left, mode) + func(right, mode)) / 2) * (right - left);
 }
 
-double inv_k_1(double x)
+double inv_k_1(double x, bool mode)
 {
-	return 1 / k1(x);
+	return 1 / k1(x, mode);
 }
 
-double inv_k_2(double x)
+double inv_k_2(double x, bool mode)
 {
-	return 1 / k2(x);
+	return 1 / k2(x, mode);
 }
 
-void create_coeff(double beg, double end, vector<double> &coeff, double h, double (*func1)(double), double(*func2)(double))
+void create_coeff(double beg, double end, vector<double> &coeff, double h, double (*func1)(double, bool), double(*func2)(double, bool), bool mode)
 {
 	coeff.resize(0);
 	double i = beg;
 	for (i = beg; (i + h) < ksi; i += h)
 	{
-		coeff.push_back((1 / h) * integrate_func(i, i + h, func1));
+		coeff.push_back((1 / h) * integrate_func(i, i + h, func1, mode));
 	}
-	coeff.push_back((1 / h) * ((integrate_func(i, ksi, func1) + integrate_func(ksi, i + h, func2) ) ) );
+	coeff.push_back((1 / h) * ((integrate_func(i, ksi, func1, mode) + integrate_func(ksi, i + h, func2, mode) ) ) );
 	i += h;
 	for (i; i < x1; i += h)
 	{
-		coeff.push_back((1 / h) * (integrate_func(i, i + h, func2)));
+		coeff.push_back((1 / h) * (integrate_func(i, i + h, func2, mode)));
 	}
 }
 
-vector<vector <double>> balance_method(int n, double h)
+vector<vector <double>> balance_method(int n, double h, bool mode)
 {
 	vector<vector <double>> answer;
 	vector<double> a, d, phi;
-	create_coeff(x0, x1, a, h, inv_k_1, inv_k_2);
+	create_coeff(x0, x1, a, h, inv_k_1, inv_k_2, mode);
 	for (int i = 0; i < a.size(); i++)
 		a[i] = 1 / a[i];
-	create_coeff(x0 + h * 0.5, x1, d, h, q1, q2);
-	create_coeff(x0 + h * 0.5, x1, phi, h, f1, f2);
+	create_coeff(x0 + h * 0.5, x1, d, h, q1, q2, mode);
+	create_coeff(x0 + h * 0.5, x1, phi, h, f1, f2, mode);
 	answer.resize(n);
 	for (int i = 0; i < answer.size(); i++)
 	{

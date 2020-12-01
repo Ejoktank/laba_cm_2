@@ -19,20 +19,25 @@ void print_matrix(vector<vector <double>> &matrix)
 	}
 }
 
-TEST(balace_method, integration_cause_no_error_with_simple_func)
+TEST(balance_method, integration_cause_no_error_with_simple_func)
 {
-	ASSERT_NO_THROW(cout << integrate_func(0, 0.5, k1) << '\n');
+	ASSERT_NO_THROW(cout << integrate_func(0, 0.5, k1, 0) << '\n');
 }
 
-TEST(balace_method, integration_cause_no_error_with_difficult_func)
+TEST(balance_method, integration_cause_no_error_with_difficult_func)
 {
-	ASSERT_NO_THROW(cout << integrate_func(0, 0.01, f2) << '\n');
+	ASSERT_NO_THROW(cout << integrate_func(0, 0.01, f2, 0) << '\n');
 }
 
 TEST(balance_method, balance_method_cause_no_error_with_simple_task)
 {
-	vector<vector <double>> test = balance_method(5, 0.2);
+	vector<vector <double>> test = balance_method(5, 0.2, 0);
 	ASSERT_NO_THROW(print_matrix(test));
+}
+
+TEST(balance_method, balance_method_cause_no_error_with_test_mode)
+{
+	ASSERT_NO_THROW(vector<vector <double>> test = balance_method(5, 0.2, 1));
 }
 
 TEST(Trid_matr_alg, Trid_matr_alg_cause_no_error)

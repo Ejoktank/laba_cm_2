@@ -15,12 +15,12 @@ const double mu1 = 0;
 const double mu2 = 1;
 const double x0 = 0;
 const double x1 = 1;
-inline double k1(double x) { return (x + 1); }
-inline double k2(double x) { return x; }
-inline double q1(double x) { return x; }
-inline double q2(double x) { return x * x; }
-inline double f1(double x) { return x; }
-inline double f2(double x) { return exp(-x); }
+inline double k1(double x, bool mode) { if (mode) return 1.4; return (x + 1); }
+inline double k2(double x, bool mode) { if (mode) return 0.4; return x; }
+inline double q1(double x, bool mode) { if (mode) return 0.4; return x; }
+inline double q2(double x, bool mode) { if (mode) return 0.16; return x * x; }
+inline double f1(double x, bool mode) { if (mode) return 0.4; return x; }
+inline double f2(double x, bool mode) { if (mode) return exp(-0.4); return exp(-x); }
 inline double u(double x) 
 {
 	double c1 = 0.7348403689121162;
