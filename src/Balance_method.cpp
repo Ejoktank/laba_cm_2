@@ -9,19 +9,29 @@ double integrate_func(double left, double right, double(*func)(double))
 	return ((func(left) + func(right)) / 2) * (right - left);
 }
 
-void create_coeff(double beg, double end, vector<double> &coeff, double h)
+double inv_k_1(double x)
+{
+	return 1 / k1(x);
+}
+
+double inv_k_2(double x)
+{
+	return 1 / k2(x);
+}
+
+void create_coeff(double beg, double end, vector<double> &coeff, double h, double (*func1)(double), double(*func2)(double))
 {
 	coeff.resize(0);
 	double i = beg;
 	for (i = beg; (i + h) < ksi; i += h)
 	{
-		coeff.push_back((1 / h) * (1 / integrate_func(i, i + h, k1)));
+		coeff.push_back((1 / h) * integrate_func(i, i + h, func1));
 	}
-	coeff.push_back((1 / h) * (1 / (integrate_func(i, ksi, k1) + integrate_func(ksi, i + h, k2) ) ) );
+	coeff.push_back((1 / h) * ((integrate_func(i, ksi, func1) + integrate_func(ksi, i + h, func2) ) ) );
 	i += h;
 	for (i; i < x1; i += h)
 	{
-		coeff.push_back((1 / h) * (1 / integrate_func(i, i + h, k2)));
+		coeff.push_back((1 / h) * (integrate_func(i, i + h, func2)));
 	}
 }
 
@@ -29,9 +39,11 @@ vector<vector <double>> balance_method(int n, double h)
 {
 	vector<vector <double>> answer;
 	vector<double> a, d, phi;
-	create_coeff(x0, x1, a, h);
-	create_coeff(x0 + h * 0.5, x1, d, h);
-	create_coeff(x0 + h * 0.5, x1, phi, h);
+	create_coeff(x0, x1, a, h, inv_k_1, inv_k_2);
+	for (int i = 0; i < a.size(); i++)
+		a[i] = 1 / a[i];
+	create_coeff(x0 + h * 0.5, x1, d, h, q1, q2);
+	create_coeff(x0 + h * 0.5, x1, phi, h, f1, f2);
 	answer.resize(n);
 	for (int i = 0; i < answer.size(); i++)
 	{
