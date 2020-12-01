@@ -70,3 +70,27 @@ TEST(Trid_matr_alg, Trid_matr_alg_can_calcylate_simple_system)
 	//cout << "Mu6:" << mu6 << '\n';
 	EXPECT_EQ((int) test1[1][2], (int) mu6);
 }
+
+TEST(Function_u, u_correct)
+{
+	vector<double> u_x;
+	cout << '\n' << u(0.0) << ' ' << u(1.0) << '\n';
+	ASSERT_NO_THROW(bool dl);
+}
+/*
+TEST(Solve_lab, solve_cause_no_error)
+{
+	ASSERT_NO_THROW(vector<double> test = solve(1));
+}*/
+
+TEST(Solve_lab, solve_actualy_find_answer)
+{
+	vector<double> test = solve(1);
+	cout.precision(8);
+	cout.setf(ios::fixed);
+	for (int i = 0; i < test.size(); i++)
+		cout << test[i] << ' ';
+	
+	cout << '\n';
+	ASSERT_NO_THROW(bool dl);
+}

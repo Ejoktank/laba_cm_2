@@ -23,12 +23,12 @@ inline double f1(double x, bool mode) { if (mode) return 0.4; return x; }
 inline double f2(double x, bool mode) { if (mode) return exp(-0.4); return exp(-x); }
 inline double u(double x) 
 {
-	double c1 = 0.7348403689121162;
-	double c2 = -1.7348403689121161;
-	double c3 = -0.670609108165965;
-	double c4 = -3.6275438934922133;
-	if (x > ksi)
-		return c1 * exp(sqrt(2/7) * x) + c2 * exp(-sqrt(2/7) * x) + 1;
-	else return c3 * exp(sqrt(2 / 5) * x) + c4 * exp(-sqrt(2 / 5) * x) - 6.25 * exp(-0.4);
+	double c1 = -0.156392771964;
+	double c2 = -0.843607228036;
+	double c3 = 2.23501503598;
+	double c4 = 1.84965510460;
+	if (x < ksi)
+		return c1 * exp(sqrt(2.0 / 7.0) * x) + c2 * exp(-sqrt(2.0 / 7.0) * x) + 1.0;
+	else return c3 * exp(sqrt(2.0 / 5.0) * x) + c4 * exp(-sqrt(2.0 / 5.0) * x) - 6.25 * exp(-0.4);
 }
 #endif

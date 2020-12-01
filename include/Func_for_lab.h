@@ -6,11 +6,11 @@
 
 #include "Balance_method.h"
 #include "Tridiagonal_matrix_algorithm.h"
+#define EPSILON 5e-07
 
 
 
-
-vector<double> solve(); //Solution for our task.
+vector<double> solve(bool mode); //Solution for our task.
 
 
 #endif
