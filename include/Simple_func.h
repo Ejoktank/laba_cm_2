@@ -11,8 +11,8 @@
 
 
 const double ksi = 0.4;
-const double mu1 = 0;
-const double mu2 = 1;
+//const double mu1 = 0;
+//const double mu2 = 1;
 const double x0 = 0;
 const double x1 = 1;
 inline double k1(double x, bool mode) { if (mode) return 1.4; return (x + 1); }

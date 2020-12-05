@@ -7,6 +7,6 @@
 using std::vector;
 
 
-vector<double> tridiagonal_matrix_algorithm(vector <vector <double>> &coeff_matrix_vi); //maybe 2 vector(coeff_matrix_ABC, coeff_Phi)
+vector<double> tridiagonal_matrix_algorithm(vector<double> &A, vector<double> &B, vector<double> &C, vector<double> &phi, double hi1, double hi2, double mu1, double mu2); //maybe 2 vector(coeff_matrix_ABC, coeff_Phi)
 
 #endif
