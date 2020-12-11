@@ -18,7 +18,7 @@ void print_matrix(vector<vector <double>> &matrix)
 		cout << '\n';
 	}
 }
-
+/*
 TEST(balance_method, integration_cause_no_error_with_simple_func)
 {
 	ASSERT_NO_THROW(cout << integrate_func(0, 0.5, k1, 0) << '\n');
@@ -49,33 +49,16 @@ TEST(Trid_matr_alg, Trid_matr_alg_cause_no_error)
 
 TEST(Trid_matr_alg, Trid_matr_alg_can_calculate_system1)
 {
-	vector<vector <double>> test1;
-	test1 = { {1, -0.5, 0, 0, 0, -12.5}, {-3, 8, -1, 0, 0, 72}, {0, -5, 12, 2, 0, -69}, {0, 0, -6, 18, -4, -156}, {0, 0, 0, -0.5, 1, 2} };
-	vector<double> y = tridiagonal_matrix_algorithm(test1);
-	//for (int i = 0; i < y.size(); i++) cout << y[i] << '\n';
-	double mu6 = 0;
-	for (int i = 0; i < y.size(); i++) mu6 += y[i] * test1[test1.size() - 1][i];
-	//cout << "Mu6:" << mu6 << '\n';
-	EXPECT_EQ(2, mu6);
-}
-
-TEST(Trid_matr_alg, Trid_matr_alg_can_calcylate_simple_system)
-{
-	vector<vector <double>> test1;
-	test1 = { {1, 5, 6}, { -4, 1, 5} };
-	vector<double> y = tridiagonal_matrix_algorithm(test1);
-	//for (int i = 0; i < y.size(); i++) cout << y[i] << '\n';
-	double mu6 = 0;
-	for (int i = 0; i < y.size(); i++) mu6 += y[i] * test1[test1.size() - 1][i];
-	//cout << "Mu6:" << mu6 << '\n';
-	EXPECT_EQ((int) test1[1][2], (int) mu6);
-}
-
-TEST(Function_u, u_correct)
-{
-	vector<double> u_x;
-	cout << '\n' << u(0.0) << ' ' << u(1.0) << '\n';
-	ASSERT_NO_THROW(bool dl);
+	double hi1 = 0.5;
+	double mu1 = -12.5;
+	vector<double> A = { -3, -5, -6 };
+	vector<double> C = { -8, -12, -18 };
+	vector<double> B = { -1, 2, -4 };
+	double hi2 = 0.5;
+	double mu2 = 2;
+	vector<double> phi = { -72, 69, 156 };
+	vector<double> y = tridiagonal_matrix_algorithm(A, B, C, phi, hi1, hi2, mu1, mu2);
+	ASSERT_NO_THROW(for (int i = 0; i < y.size(); i++) cout << y[i] << '\n');
 }
 /*
 TEST(Solve_lab, solve_cause_no_error)
@@ -85,12 +68,10 @@ TEST(Solve_lab, solve_cause_no_error)
 
 TEST(Solve_lab, solve_actualy_find_answer)
 {
-	vector<double> test = solve(1);
+	vector<double> test = solve(0);
 	cout.precision(8);
 	cout.setf(ios::fixed);
-	for (int i = 0; i < test.size(); i++)
-		cout << test[i] << ' ';
 	
-	cout << '\n';
+	cout << '\n' << test.size() << '\n';
 	ASSERT_NO_THROW(bool dl);
 }

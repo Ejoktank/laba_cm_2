@@ -29,41 +29,36 @@ void create_coeff(double beg, double end, vector<double> &coeff, double h, doubl
 	}
 	coeff.push_back((1 / h) * ((integrate_func(i, ksi, func1, mode) + integrate_func(ksi, i + h, func2, mode) ) ) );
 	i += h;
-	for (i; i < x1; i += h)
+	for (i; (i + h) < end; i += h)
 	{
 		coeff.push_back((1 / h) * (integrate_func(i, i + h, func2, mode)));
 	}
+	/*if (i + h / 2 < end)
+	{
+		cout << "Parararam: " << (end - i) << '\n';
+		coeff.push_back((1 / h) * (integrate_func(i, end, func2, mode)));
+	}*/
 }
 
-vector<vector <double>> balance_method(int n, double h, bool mode)
+void balance_method(int n, double h, bool mode, vector<double> &A, vector<double> &B, vector<double> &C, vector<double> &phi_matrix, double &hi1, double &hi2, double &mu1, double &mu2)
 {
-	vector<vector <double>> answer;
 	vector<double> a, d, phi;
-	create_coeff(x0, x1, a, h, inv_k_1, inv_k_2, mode);
+	create_coeff(x0, x1, a, h, inv_k_1, inv_k_2, mode); // a -> n - 1
 	for (int i = 0; i < a.size(); i++)
 		a[i] = 1 / a[i];
-	create_coeff(x0 + h * 0.5, x1, d, h, q1, q2, mode);
-	create_coeff(x0 + h * 0.5, x1, phi, h, f1, f2, mode);
-	answer.resize(n);
-	for (int i = 0; i < answer.size(); i++)
+	create_coeff(x0 + h * 0.5, x1 - h * 0.5, d, h, q1, q2, mode); // d -> n - 2
+	create_coeff(x0 + h * 0.5, x1 - h * 0.5, phi, h, f1, f2, mode); // phi -> n - 2
+	std::cout << d.size() << '\n';
+	hi1 = a[1] / (a[0] + a[1] + d[0] * h * h);
+	mu1 = (phi[0] * h * h + a[0] * x0) / (a[0] + a[1] + d[0] * h * h);
+	for (int i = 1; i < n - 2; i++)
 	{
-		answer[i].resize(n + 1);
-		for (int j = 0; j < answer[i].size(); j++)
-			answer[i][j] = 0;
+		A.push_back( a[i] / (h * h) );
+		C.push_back( (a[i] + a[i + 1]) / (h * h) + d[i] );
+		B.push_back(a[i + 1] / (h * h));
+		phi_matrix.push_back(phi[i]);
 	}
-	int i; 
-	answer[0][0] = 1;
-	answer[0][1] = -(a[1] / (a[0] + a[1] + d[0] * h * h));
-	answer[0][n] = (h * h * phi[0] + mu1 * a[0]) / (a[0] + a[1] + d[0] * h * h);
-	for (i = 1; i < n - 1; i++)
-	{
-		answer[i][i - 1] = a[i - 1] / (h * h);
-		answer[i][i] = -( (a[i - 1] + a[i]) / (h * h) + d[i - 1]);
-		answer[i][i + 1] = a[i] / (h * h);
-		answer[i][n] = -phi[i - 1];
-	}
-	answer[n - 1][n - 2] = -(a[n - 2] / (a[n - 2] + a[n - 1] + d[n - 2] * h * h));
-	answer[n - 1][n - 1] = 1;
-	answer[n - 1][n] = (phi[n - 2] * h * h + mu2 * a[n - 1]) / (a[n - 2] + a[n - 1] + d[n - 2] * h * h);
-	return answer;
+	hi2 = a[n - 3] / (a[n - 3] + a[n - 2] + d[n - 3] * h * h);
+	mu2 = (phi[n - 3] * h * h + a[n - 2] * x1) / (a[n - 3] + a[n - 2] + d[n - 3] * h * h);
+
 };
