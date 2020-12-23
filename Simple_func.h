@@ -24,10 +24,17 @@ inline double f1(double x, bool mode) { if (mode) return 0.4; return x; }
 inline double f2(double x, bool mode) { if (mode) return exp(-0.4); return exp(-x); }
 inline double u(double x) 
 {
+	/* true
 	double c1 = 0.0605765;
 	double c2 = -1.06058;
 	double c3 = -0.472046;
-	double c4 = -4.33092;
+	double c4 = -4.3309223;
+	*/
+	double c1 = 0.06055722287;
+	double c2 = -1.060557223;
+	double c3 = -0.4720245508;
+	double c4 = -4.331084824;
+
 	if (x < ksi)
 		return c1 * exp(sqrt(2.0 / 7.0) * x) + c2 * exp(-sqrt(2.0 / 7.0) * x) + 1.0;
 	else return c3 * exp(sqrt(2.0 / 5.0) * x) + c4 * exp(-sqrt(2.0 / 5.0) * x) + 6.25 * exp(-0.4);
